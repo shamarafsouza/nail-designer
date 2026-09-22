@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Maison Élise — Nail Atelier</title>
+<meta name="version" content="3.0 - services without prices, single pricing section, gallery fallback">
 <meta name="description" content="Luxury Nail Atelier — beleza, cuidado e sofisticação em cada detalhe.">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
@@ -36,14 +37,14 @@ footer{background:#211a1c;color:#bfb0aa;text-align:center;padding:32px;font-size
 
 <section class="intro"><div class="wrap intro-grid"><div class="intro-photo"><img loading="lazy" src="https://images.pexels.com/photos/3997380/pexels-photo-3997380.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Nail design elegante"></div><div class="intro-copy"><div class="eyebrow">The atelier</div><h2>Beleza que começa nos detalhes.</h2><p>Cada atendimento é pensado para valorizar a sua personalidade. Do acabamento clássico ao nail art mais marcante, cada unha recebe atenção individual e um toque de sofisticação.</p><div class="signature">Maison Élise</div><div style="margin-top:28px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#a96f78">Atendimento personalizado · Materiais selecionados · Acabamento premium</div></div></div></section>
 
-<section class="services" id="servicos"><div class="wrap"><div class="heading"><div class="eyebrow">Signature services</div><h2>Serviços selecionados</h2><p>Procedimentos para mãos e pés, com opções de alongamento e acabamento personalizado. Consulte a tabela de valores abaixo.</p></div><div class="cards">
+<section class="services" id="servicos"><div class="wrap"><div class="heading"><div class="eyebrow">Signature services</div><h2>Procedimentos</h2><p>Procedimentos para mãos e pés, com opções de alongamento e acabamento personalizado. Consulte a tabela de valores abaixo.</p></div><div class="cards">
 <article class="card"><span class="number">01 / HANDS</span><h3>Manicure</h3><p>Cuidado completo das mãos, cuticulagem e esmaltação.</p></article>
 <article class="card"><span class="number">02 / FEET</span><h3>Pedicure</h3><p>Um ritual de cuidado para deixar os pés impecáveis.</p></article>
 <article class="card"><span class="number">03 / GEL</span><h3>Banho de Gel</h3><p>Resistência, brilho e proteção para a unha natural.</p></article>
 <article class="card"><span class="number">04 / EXTENSION</span><h3>Acrílico</h3><p>Alongamento personalizado com formato escolhido por você.</p></article>
 </div></div></section>
 
-<section class="gallery" id="galeria"><div class="wrap"><div class="heading"><div class="eyebrow">Portfolio</div><h2>Inspirações</h2><p>Uma seleção demonstrativa de estilos para você escolher sua próxima inspiração.</p></div><div class="mosaic"><img loading="lazy" class="big" src="https://images.pexels.com/photos/939835/pexels-photo-939835.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Unhas"><img loading="lazy" src="https://images.pexels.com/photos/7755253/pexels-photo-7755253.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Nail art"><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=700&q=85" alt="Esmaltação"><img loading="lazy" src="https://images.pexels.com/photos/1612413/pexels-photo-1612413.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Unhas decoradas"></div></div></section>
+<section class="gallery" id="galeria"><div class="wrap"><div class="heading"><div class="eyebrow">Portfolio</div><h2>Inspirações</h2><p>Uma seleção demonstrativa de estilos para você escolher sua próxima inspiração.</p></div><div class="mosaic"><img loading="lazy" class="big" src="https://images.pexels.com/photos/939835/pexels-photo-939835.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Unhas"><img loading="lazy" src="https://images.pexels.com/photos/7755253/pexels-photo-7755253.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Nail art"><img loading="lazy" src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=700&q=85" alt="Esmaltação"><img loading="lazy" src="https://images.pexels.com/photos/1612413/pexels-photo-1612413.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Unhas decoradas"></div></div></section>
 
 <section class="agenda" id="agenda"><div class="wrap"><div class="heading"><div class="eyebrow">Availability</div><h2>Reserve seu momento</h2><p>Agenda demonstrativa. Clique em um dia para visualizar os horários disponíveis.</p></div><div class="agenda-grid"><div class="calendar"><div class="calendar-top"><h3>Setembro 2026</h3><span>Horários disponíveis</span></div><div class="week"><div>DOM</div><div>SEG</div><div>TER</div><div>QUA</div><div>QUI</div><div>SEX</div><div>SÁB</div></div><div class="days" id="days"></div></div><aside class="booking"><h3>Seu horário</h3><p>Escolha uma data. Depois, envie uma mensagem pelo WhatsApp para confirmar o procedimento.</p><div class="chosen"><small>Data selecionada</small><strong id="selected">Selecione um dia</strong></div><div class="times-list" id="times"></div><a class="whats" id="whats" target="_blank" href="#">Confirmar pelo WhatsApp</a></aside></div></div></section>
 
@@ -69,6 +70,17 @@ function chooseTime(t){window.time=t;document.querySelectorAll(".time").forEach(
 window.choose=choose;window.chooseTime=chooseTime;
 window.addEventListener("scroll",()=>document.getElementById("header").classList.toggle("scrolled",scrollY>40));
 choose(22);
+</script>
+
+<script>
+document.querySelectorAll(".mosaic img").forEach(img => {
+  img.addEventListener("error", () => {
+    if (!img.dataset.fallback) {
+      img.dataset.fallback = "1";
+      img.src = "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=900&q=85";
+    }
+  });
+});
 </script>
 </body>
 </html>
